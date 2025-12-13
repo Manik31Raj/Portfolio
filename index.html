@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manik Raj Chaurasia | Java Backend Developer</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0d1117; 
+            --sidebar-color: #161b22;
+            --text-color: #c9d1d9;
+            --keyword-color: #ff7b72; 
+            --string-color: #a5d6ff; 
+            --class-color: #d2a8ff; 
+            --comment-color: #8b949e; 
+            --accent-color: #f89820; 
+            --card-bg: #21262d;
+            --whatsapp-color: #25D366;
+            --phone-color: #007bff;
+            --linkedin-color: #0077b5;
+            --github-color: #f0f6fc;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Consolas', 'Courier New', monospace; }
+        
+        body { 
+            background-color: var(--bg-color); 
+            color: var(--text-color); 
+            display: flex; 
+            height: 100vh; 
+            overflow: hidden; 
+        }
+
+        /* Mouse Spotlight Effect */
+        #spotlight {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            background: radial-gradient(600px circle at var(--x) var(--y), rgba(29, 33, 41, 0.5), transparent 40%);
+            z-index: 1;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 80px;
+            background-color: var(--sidebar-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px;
+            border-right: 1px solid #30363d;
+            z-index: 100;
+        }
+
+        .sidebar i {
+            font-size: 24px;
+            color: var(--comment-color);
+            margin-bottom: 30px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .sidebar i:hover, .sidebar i.active { color: var(--accent-color); transform: scale(1.2); text-shadow: 0 0 10px var(--accent-color); }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            position: relative;
+            scroll-behavior: smooth;
+            z-index: 10;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            background-color: var(--bg-color);
+            padding: 10px 20px;
+            border-bottom: 1px solid #30363d;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .file-tab {
+            background-color: var(--card-bg);
+            padding: 5px 15px;
+            border-radius: 5px 5px 0 0;
+            border-top: 2px solid var(--accent-color);
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            animation: slideDown 0.5s ease;
+        }
+
+        /* Sections */
+        section {
+            min-height: 100vh;
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-bottom: 1px dashed #30363d;
+            opacity: 0; 
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        section.visible { opacity: 1; transform: translateY(0); }
+
+        h1, h2 { color: var(--class-color); margin-bottom: 20px; }
+        .keyword { color: var(--keyword-color); }
+        .string { color: var(--string-color); }
+        
+        /* Hero Section */
+        .hero-text { font-size: 1.1rem; line-height: 1.6; background: rgba(0,0,0,0.3); padding: 20px; border-radius: 8px; border: 1px solid #30363d; margin-bottom: 30px; }
+        .hero-name { font-size: 3.5rem; color: var(--string-color); margin-top: 10px; text-shadow: 0 0 20px rgba(165, 214, 255, 0.2); }
+        
+        /* TYPING BIO STYLES */
+        .hero-bio {
+            font-size: 1rem; /* Slightly smaller to fit more text */
+            color: var(--text-color);
+            margin-top: 20px;
+            line-height: 1.8;
+            min-height: 120px; 
+            max-width: 850px;
+            text-align: justify; /* Justify text for cleaner block look */
+        }
+        
+        /* Buttons */
+        .btn-group { margin-top: 30px; display: flex; gap: 15px; flex-wrap: wrap; }
+        
+        .btn {
+            padding: 12px 24px;
+            background: transparent;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.3s;
+            border-radius: 4px;
+        }
+
+        .btn:hover { background: var(--accent-color); color: #000; box-shadow: 0 0 20px var(--accent-color); }
+        .btn-live { border-color: #238636; color: #238636; }
+        .btn-live:hover { background: #238636; color: #fff; box-shadow: 0 0 20px #238636; }
+
+        /* SKILLS GRID */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .tech-card {
+            background: var(--card-bg);
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 20px 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+            cursor: default;
+        }
+        .tech-card i { font-size: 36px; margin-bottom: 12px; transition: 0.3s; }
+        .tech-card span { font-size: 0.85rem; color: var(--comment-color); font-weight: bold; text-align: center; }
+
+        /* Tech Hover Effects */
+        .t-java:hover { border-color: #f89820; box-shadow: 0 0 15px rgba(248, 152, 32, 0.2); } .t-java i { color: #f89820; }
+        .t-spring:hover { border-color: #6db33f; box-shadow: 0 0 15px rgba(109, 179, 63, 0.2); } .t-spring i { color: #6db33f; }
+        .t-aws:hover { border-color: #ff9900; box-shadow: 0 0 15px rgba(255, 153, 0, 0.2); } .t-aws i { color: #ff9900; }
+        .t-db:hover { border-color: #00758f; box-shadow: 0 0 15px rgba(0, 117, 143, 0.2); } .t-db i { color: #00758f; }
+        .t-git:hover { border-color: #f34f29; box-shadow: 0 0 15px rgba(243, 79, 41, 0.2); } .t-git i { color: #f34f29; }
+        .t-html:hover { border-color: #e34c26; box-shadow: 0 0 15px rgba(227, 76, 38, 0.2); } .t-html i { color: #e34c26; }
+        .t-css:hover { border-color: #264de4; box-shadow: 0 0 15px rgba(38, 77, 228, 0.2); } .t-css i { color: #264de4; }
+        .t-dsa:hover { border-color: #f1c40f; box-shadow: 0 0 15px rgba(241, 196, 15, 0.2); } .t-dsa i { color: #f1c40f; }
+        .t-oop:hover { border-color: #9b59b6; box-shadow: 0 0 15px rgba(155, 89, 182, 0.2); } .t-oop i { color: #9b59b6; }
+        .t-api:hover { border-color: #1abc9c; box-shadow: 0 0 15px rgba(26, 188, 156, 0.2); } .t-api i { color: #1abc9c; }
+        .t-test:hover { border-color: #c0392b; box-shadow: 0 0 15px rgba(192, 57, 43, 0.2); } .t-test i { color: #c0392b; }
+        .t-jira:hover { border-color: #0052cc; box-shadow: 0 0 15px rgba(0, 82, 204, 0.2); } .t-jira i { color: #0052cc; }
+        .t-agile:hover { border-color: #20c997; box-shadow: 0 0 15px rgba(32, 201, 151, 0.2); } .t-agile i { color: #20c997; }
+        .t-ai:hover { border-color: #e83e8c; box-shadow: 0 0 15px rgba(232, 62, 140, 0.2); } .t-ai i { color: #e83e8c; }
+
+        /* Contact Grid */
+        .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; width: 100%; margin-top: 30px; }
+        .contact-card { background: var(--card-bg); padding: 30px; border-radius: 8px; border: 1px solid #30363d; text-align: center; transition: 0.3s; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .contact-card:hover { transform: translateY(-5px); border-color: var(--text-color); }
+        .icon-circle { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 15px; background: rgba(255,255,255,0.05); }
+        .btn-contact { margin-top: 15px; padding: 8px 16px; border-radius: 5px; text-decoration: none; font-weight: bold; font-size: 14px; transition: 0.3s; display: inline-block; border: 1px solid; }
+
+        /* Contact Colors */
+        .c-email .icon-circle { color: var(--accent-color); border: 2px solid var(--accent-color); }
+        .c-email .btn-contact { background: var(--accent-color); color: #000; border-color: var(--accent-color); }
+        .c-whatsapp .icon-circle { color: var(--whatsapp-color); border: 2px solid var(--whatsapp-color); }
+        .c-whatsapp .btn-contact { background: var(--whatsapp-color); color: #000; border-color: var(--whatsapp-color); }
+        .c-phone .icon-circle { color: var(--phone-color); border: 2px solid var(--phone-color); }
+        .c-phone .btn-contact { background: var(--phone-color); color: #fff; border-color: var(--phone-color); }
+        .c-linkedin .icon-circle { color: var(--linkedin-color); border: 2px solid var(--linkedin-color); }
+        .c-linkedin .btn-contact { background: var(--linkedin-color); color: #fff; border-color: var(--linkedin-color); }
+        .c-github .icon-circle { color: var(--github-color); border: 2px solid var(--github-color); }
+        .c-github .btn-contact { background: var(--github-color); color: #000; border-color: var(--github-color); }
+
+        .raw-text { font-size: 0.85rem; color: var(--comment-color); margin-top: 10px; user-select: all; }
+
+        /* Projects Grid */
+        .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; margin-top: 30px; }
+        .project-card { background-color: var(--card-bg); padding: 25px; border: 1px solid #30363d; border-radius: 8px; transition: 0.4s; position: relative; overflow: hidden; }
+        .project-card:hover { transform: translateY(-10px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); border-color: var(--text-color); }
+        .tech-stack { font-size: 0.85rem; color: var(--comment-color); margin-top: 15px; display: flex; flex-wrap: wrap; gap: 8px; }
+        .tech-tag { background: rgba(255,255,255,0.1); padding: 2px 8px; border-radius: 4px; }
+
+        /* Experience Timeline */
+        .timeline-item { border-left: 2px solid var(--accent-color); padding-left: 25px; margin-bottom: 40px; position: relative; }
+        .timeline-item::before { content: ''; width: 14px; height: 14px; background: var(--bg-color); border: 2px solid var(--accent-color); position: absolute; left: -9px; top: 0; border-radius: 50%; transition: 0.3s; }
+
+        /* Cursor */
+        .cursor { display: inline-block; width: 8px; background-color: var(--accent-color); animation: blink 1s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            body { flex-direction: column; overflow: auto; background-image: none; }
+            .sidebar { width: 100%; height: 60px; flex-direction: row; justify-content: space-around; padding: 0; border-bottom: 1px solid #30363d; order: 2; position: fixed; bottom: 0; }
+            .main-content { padding-bottom: 60px; }
+            section { padding: 80px 20px; min-height: auto; }
+            .hero-name { font-size: 2.2rem; }
+            .contact-grid { grid-template-columns: 1fr; }
+            .tech-grid { grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); }
+        }
+
+    </style>
+</head>
+<body>
+    
+    <div id="spotlight"></div>
+
+    <nav class="sidebar">
+        <i class="fas fa-home active" onclick="scrollToSection('home')"></i>
+        <i class="fas fa-code" onclick="scrollToSection('projects')"></i>
+        <i class="fas fa-wrench" onclick="scrollToSection('skills')"></i>
+        <i class="fas fa-briefcase" onclick="scrollToSection('experience')"></i>
+        <i class="fas fa-envelope" onclick="scrollToSection('contact')"></i>
+    </nav>
+
+    <div class="main-content">
+        
+        <div class="top-bar">
+            <div class="file-tab">
+                <i class="fab fa-java" style="color: var(--accent-color);"></i>
+                ManikPortfolio.java
+            </div>
+            <span style="margin-left: auto; color: var(--comment-color);">Compiling...</span>
+        </div>
+
+        <section id="home" class="visible">
+            <div class="hero-text" id="code-block">
+                </div>
+            
+            <h1 class="hero-name">Manik Raj Chaurasia<span class="cursor">&nbsp;</span></h1>
+            
+            <div class="hero-bio" id="hero-bio"></div>
+            
+            <div class="btn-group">
+                <a href="Manik_Raj_Chaurasia_Resume.pdf" download="Manik_Raj_Chaurasia_Resume.pdf" class="btn">
+                    <i class="fas fa-download"></i> Download Resume
+                </a>
+                <a href="#contact" onclick="scrollToSection('contact')" class="btn" style="border-color: var(--string-color); color: var(--string-color);">
+                    <i class="fas fa-paper-plane"></i> Contact Me
+                </a>
+            </div>
+        </section>
+
+        <section id="projects">
+            <h2><span class="keyword">@Projects</span></h2>
+            <div class="project-grid">
+                
+                <div class="project-card">
+                    <h3>SmartRideShare</h3>
+                    <p style="margin: 10px 0; font-size: 0.95rem; line-height: 1.5;">
+                        Architected a ride-pooling application using Java Spring Boot. Implemented geospatial logic for route matching, JWT security, and integrated Stripe Payment Gateway.
+                    </p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Java Spring Boot</span>
+                        <span class="tech-tag">MySQL</span>
+                        <span class="tech-tag">JWT</span>
+                        <span class="tech-tag">Stripe API</span>
+                    </div>
+                    <div style="margin-top: 20px;">
+                        <a href="https://smartrideshare.onrender.com" target="_blank" class="btn btn-live" style="padding: 8px 16px; font-size: 14px;">
+                            <i class="fas fa-external-link-alt"></i> Live Demo
+                        </a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <h3>Stripe Payment System</h3>
+                    <p style="margin: 10px 0; font-size: 0.95rem; line-height: 1.5;">
+                        Designed a scalable payment microservice on AWS. Features ActiveMQ for async messaging and Spring AI for dynamic error handling.
+                    </p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Microservices</span>
+                        <span class="tech-tag">AWS</span>
+                        <span class="tech-tag">ActiveMQ</span>
+                        <span class="tech-tag">Spring AI</span>
+                    </div>
+                    <div style="margin-top: 20px;">
+                        <a href="#" class="btn" style="padding: 8px 16px; font-size: 14px; border-color: var(--comment-color); color: var(--comment-color); cursor: default;">
+                            <i class="fab fa-github"></i> GitHub Demo
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="skills">
+            <h2><span class="keyword">@TechStack</span></h2>
+            
+            <div class="tech-grid">
+                <div class="tech-card t-java"><i class="fab fa-java"></i><span>Java</span></div>
+                <div class="tech-card t-spring"><i class="fas fa-leaf"></i><span>Spring Boot</span></div>
+                <div class="tech-card t-java"><i class="fas fa-network-wired"></i><span>Microservices</span></div>
+                <div class="tech-card t-db"><i class="fas fa-database"></i><span>MySQL</span></div>
+                <div class="tech-card t-aws"><i class="fab fa-aws"></i><span>AWS</span></div>
+                <div class="tech-card t-dsa"><i class="fas fa-brain"></i><span>DSA</span></div>
+                <div class="tech-card t-oop"><i class="fas fa-cubes"></i><span>OOPs</span></div>
+                <div class="tech-card t-api"><i class="fas fa-exchange-alt"></i><span>RESTful API</span></div>
+                <div class="tech-card t-test"><i class="fas fa-vial"></i><span>JUnit</span></div>
+                <div class="tech-card t-git"><i class="fab fa-git-alt"></i><span>Git</span></div>
+                <div class="tech-card t-jira"><i class="fab fa-jira"></i><span>Jira</span></div>
+                <div class="tech-card t-agile"><i class="fas fa-project-diagram"></i><span>Agile/Scrum</span></div>
+                <div class="tech-card t-ai"><i class="fas fa-robot"></i><span>AI & ML</span></div>
+                <div class="tech-card t-html"><i class="fab fa-html5"></i><span>HTML</span></div>
+                <div class="tech-card t-css"><i class="fab fa-css3-alt"></i><span>CSS</span></div>
+            </div>
+        </section>
+
+        <section id="experience">
+            <h2><span class="keyword">@Experience</span></h2>
+            
+            <div class="timeline-item">
+                <h3 style="color: var(--string-color);">Backend Developer (Intern)</h3>
+                <h4 style="color: var(--comment-color);">Infosys Springboard | Oct 2025 - Dec 2025</h4>
+                <p style="margin-top: 5px;">Engineered complex database schemas and REST APIs for ride-pooling logic.</p>
+            </div>
+
+            <div class="timeline-item">
+                <h3 style="color: var(--string-color);">Java Developer Trainee</h3>
+                <h4 style="color: var(--comment-color);">HulkHireTech | Aug 2025 - Sep 2025</h4>
+                <p style="margin-top: 5px;">Built secure payment processing systems using Spring Boot Microservices on AWS.</p>
+            </div>
+        </section>
+
+        <section id="contact">
+            <h2><span class="keyword">return</span> contactMethods;</h2>
+            
+            <div class="contact-grid">
+                
+                <div class="contact-card c-email">
+                    <div class="icon-circle"><i class="fas fa-envelope"></i></div>
+                    <h3>Email</h3>
+                    <p class="raw-text">manik31raj@gmail.com</p>
+                    <a href="mailto:manik31raj@gmail.com" class="btn-contact">hireMe()</a>
+                </div>
+
+                <div class="contact-card c-whatsapp">
+                    <div class="icon-circle"><i class="fab fa-whatsapp"></i></div>
+                    <h3>WhatsApp</h3>
+                    <p class="raw-text">+91 6207119945</p>
+                    <a href="https://wa.me/916207119945" target="_blank" class="btn-contact">chat()</a>
+                </div>
+
+                <div class="contact-card c-linkedin">
+                    <div class="icon-circle"><i class="fab fa-linkedin"></i></div>
+                    <h3>LinkedIn</h3>
+                    <p class="raw-text">@manik31raj</p>
+                    <a href="https://linkedin.com/in/manik31raj" target="_blank" class="btn-contact">connect()</a>
+                </div>
+
+                <div class="contact-card c-github">
+                    <div class="icon-circle"><i class="fab fa-github"></i></div>
+                    <h3>GitHub</h3>
+                    <p class="raw-text">@manik31raj</p>
+                    <a href="https://github.com/manik31raj" target="_blank" class="btn-contact">follow()</a>
+                </div>
+
+                <div class="contact-card c-phone">
+                    <div class="icon-circle"><i class="fas fa-phone"></i></div>
+                    <h3>Phone</h3>
+                    <p class="raw-text">+91 6207119945</p>
+                    <a href="tel:+916207119945" class="btn-contact">callNow()</a>
+                </div>
+
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // 1. Hero Code Text (Static)
+        const codeText = `
+<span class="keyword">package</span> portfolio;
+
+<span class="keyword">public class</span> <span class="class-name">ManikRajChaurasia</span> <span class="keyword">extends</span> Developer {
+    <span class="keyword">public static void</span> <span class="method">main</span>(String[] args) {
+        String skill = <span class="string">"Java Spring Boot"</span>;
+        System.out.println(<span class="string">"Building Scalable Systems..."</span>);
+    }
+}`;
+        document.getElementById("code-block").innerHTML = codeText;
+
+        // 2. Scroll Animation Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('section').forEach((section) => {
+            observer.observe(section);
+        });
+
+        // 3. HOME BIO TYPING LOGIC
+        const bioLines = [
+            "I’m a Software Developer focused on building scalable, secure, and user-centric applications using modern backend technologies. My primary expertise is in Java and Spring Boot, where I design clean, efficient systems backed by strong engineering fundamentals.",
+            "I’m passionate about continuous learning, problem-solving, and turning ideas into impactful software. I actively practice competitive programming and am driven to grow as a backend-focused engineer who delivers real value through technology."
+        ];
+
+        const bioContainer = document.getElementById('hero-bio');
+        let lineIndex = 0;
+        let charIndex = 0;
+
+        function typeBio() {
+            if (lineIndex < bioLines.length) {
+                if (charIndex < bioLines[lineIndex].length) {
+                    bioContainer.innerHTML += bioLines[lineIndex].charAt(charIndex);
+                    charIndex++;
+                    setTimeout(typeBio, 10); // Faster typing speed
+                } else {
+                    // Line finished, add break
+                    bioContainer.innerHTML += "<br><br>"; // Adding lines/space
+                    lineIndex++;
+                    charIndex = 0;
+                    setTimeout(typeBio, 200); // Pause between paragraphs
+                }
+            }
+        }
+        
+        // Start typing immediately on load
+        window.onload = typeBio;
+
+        // 4. Dynamic Mouse Spotlight
+        document.addEventListener('mousemove', e => {
+            const spotlight = document.getElementById('spotlight');
+            spotlight.style.setProperty('--x', e.clientX + 'px');
+            spotlight.style.setProperty('--y', e.clientY + 'px');
+        });
+    </script>
+</body>
+</html>
