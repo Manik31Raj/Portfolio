@@ -288,17 +288,24 @@
                 <div class="project-card">
                     <h3>SmartRideShare</h3>
                     <p style="margin: 10px 0; font-size: 0.95rem; line-height: 1.5;">
-                        Architected a ride-pooling application using Java Spring Boot. Implemented geospatial logic for route matching, JWT security, and integrated Stripe Payment Gateway.
+                       It is a robust backend system engineered with Java
+Spring Boot , designed to handle the complex lifecycle of a ride-hailing platform. The application features
+a comprehensive RESTful API architecture backed by a MySQL database, managing intricate relationships
+between users, trips, and transaction history and integrated with Stripe API for seamless real-time
+payment processing.
                     </p>
                     <div class="tech-stack">
                         <span class="tech-tag">Java Spring Boot</span>
                         <span class="tech-tag">MySQL</span>
-                        <span class="tech-tag">JWT</span>
+                        <span class="tech-tag">Maven</span>
                         <span class="tech-tag">Stripe API</span>
                     </div>
                     <div style="margin-top: 20px;">
                         <a href="https://smartrideshare.onrender.com" target="_blank" class="btn btn-live" style="padding: 8px 16px; font-size: 14px;">
                             <i class="fas fa-external-link-alt"></i> Live Demo
+                        </a>
+                         <a href="https://github.com/Manik31Raj/SmartRideShare" class="btn" style="padding: 8px 16px; font-size: 14px; border-color: var(--comment-color); color: var(--comment-color); cursor: default;">
+                            <i class="fab fa-github"></i> GitHub Demo
                         </a>
                     </div>
                 </div>
@@ -414,13 +421,14 @@
 
         // 1. Hero Code Text (Static)
         const codeText = `
-<span class="keyword">package</span> portfolio;
-
+<pre><span class="keyword">package</span> portfolio;
 <span class="keyword">public class</span> <span class="class-name">ManikRajChaurasia</span> <span class="keyword">extends</span> Developer {
-    <br><span class="keyword">public static void</span> <span class="method">main</span>(String[] args) {<br>
-        String skill = <span class="string">"Java Spring Boot"</span>;<br>
-    }
-}`;
+    <span class="keyword">public static void</span> <span class="method">main</span>(String[] args)
+        {
+           String skill = <span class="string">"Java Spring Boot"</span>;
+           System.out.println(<span class="string">"Welcome to my page"</span>);
+         }
+}</pre>`;
         document.getElementById("code-block").innerHTML = codeText;
 
         // 2. Scroll Animation Observer
