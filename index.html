@@ -122,13 +122,13 @@
         
         /* TYPING BIO STYLES */
         .hero-bio {
-            font-size: 1rem; /* Slightly smaller to fit more text */
+            font-size: 1rem; 
             color: var(--text-color);
             margin-top: 20px;
             line-height: 1.8;
             min-height: 120px; 
             max-width: 850px;
-            text-align: justify; /* Justify text for cleaner block look */
+            text-align: justify; 
         }
         
         /* Buttons */
@@ -286,6 +286,25 @@
             <div class="project-grid">
                 
                 <div class="project-card">
+                    <h3>Microservice Expense Tracker</h3>
+                    <p style="margin: 10px 0; font-size: 0.95rem; line-height: 1.5;">
+                        A robust microservices-based expense management system built with 5 distinct services. Features JWT authentication, Redis token blacklisting after logout, Kafka for asynchronous event messaging, Feign Client for synchronous inter-service communication, 50+ REST endpoints, and a global exception handler.
+                    </p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Spring Boot</span>
+                        <span class="tech-tag">Microservices</span>
+                        <span class="tech-tag">Kafka</span>
+                        <span class="tech-tag">Redis</span>
+                        <span class="tech-tag">JWT</span>
+                    </div>
+                    <div style="margin-top: 20px;">
+                        <a href="https://github.com/Manik31Raj" target="_blank" class="btn" style="padding: 8px 16px; font-size: 14px; border-color: var(--comment-color); color: var(--comment-color);">
+                            <i class="fab fa-github"></i> GitHub Code
+                        </a>
+                    </div>
+                </div>
+
+                <div class="project-card">
                     <h3>SmartRideShare</h3>
                     <p style="margin: 10px 0; font-size: 0.95rem; line-height: 1.5;">
                        It is a robust backend system engineered with Java
@@ -313,7 +332,7 @@ payment processing.
                 <div class="project-card">
                     <h3>Stripe Payment Integration System</h3>
                     <p style="margin: 10px 0; font-size: 0.95rem; line-height: 1.5;">
-                        Contributed to building a secure and scalable Stripe Payment Integration System using Java Spring Boot in a microservices architecture on AWS. Worked on payment processing, status management, Stripe PSP REST API integration, notification handling, security enhancements, and error management.
+                         Contributed to building a secure and scalable Stripe Payment Integration System using Java Spring Boot in a microservices architecture on AWS. Worked on payment processing, status management, Stripe PSP REST API integration, notification handling, security enhancements, and error management.
                     </p>
                     <div class="tech-stack">
                         <span class="tech-tag">Microservices</span>
@@ -356,6 +375,12 @@ payment processing.
         <section id="experience">
             <h2><span class="keyword">@Experience</span></h2>
             
+            <div class="timeline-item">
+                <h3 style="color: var(--string-color);">Software Engineer | AVS Associates</h3>
+                <h4 style="color: var(--comment-color);">Jan 2026 - Present</h4>
+                <p style="margin-top: 5px;">Designed backend REST APIs and relational MySQL schemas for a real estate commission and payout distribution platform, implementing automated multi-tier calculation logic (direct referrals, binary pair matching), Spring Security JWT/RBAC auth, and scheduled cron jobs for volume calculation and tax deductions (TDS).</p>
+            </div>
+
             <div class="timeline-item">
                 <h3 style="color: var(--string-color);">Backend Developer (Intern)</h3>
                 <h4 style="color: var(--comment-color);">Infosys Springboard | Oct 2025 - Dec 2025</h4>
@@ -425,8 +450,8 @@ payment processing.
 <span class="keyword">public class</span> <span class="class-name">ManikRajChaurasia</span> <span class="keyword">extends</span> Developer {
     <span class="keyword">public static void</span> <span class="method">main</span>(String[] args)
         {
-           String skill = <span class="string">"Java Spring Boot"</span>;
-           System.out.println(<span class="string">"Welcome to my page"</span>);
+             String skill = <span class="string">"Java Spring Boot"</span>;
+             System.out.println(<span class="string">"Welcome to my page"</span>);
          }
 }</pre>`;
         document.getElementById("code-block").innerHTML = codeText;
@@ -459,18 +484,16 @@ payment processing.
                 if (charIndex < bioLines[lineIndex].length) {
                     bioContainer.innerHTML += bioLines[lineIndex].charAt(charIndex);
                     charIndex++;
-                    setTimeout(typeBio, 10); // Faster typing speed
+                    setTimeout(typeBio, 10); 
                 } else {
-                    // Line finished, add break
-                    bioContainer.innerHTML += "<br><br>"; // Adding lines/space
+                    bioContainer.innerHTML += "<br><br>"; 
                     lineIndex++;
                     charIndex = 0;
-                    setTimeout(typeBio, 200); // Pause between paragraphs
+                    setTimeout(typeBio, 200); 
                 }
             }
         }
         
-        // Start typing immediately on load
         window.onload = typeBio;
 
         // 4. Dynamic Mouse Spotlight
